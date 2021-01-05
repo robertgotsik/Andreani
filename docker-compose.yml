@@ -1,0 +1,48 @@
+version: '3.4'
+
+services:
+  andreani:
+    image: ${DOCKER_REGISTRY-}andreani
+    container_name: webapibackend
+    build:
+      context: .
+      dockerfile: Andreani/Dockerfile
+    depends_on:
+     - database
+     - rabbitmq
+    ports:
+    - "1949:80"
+
+  andreaniCodificador:
+    image: ${DOCKER_REGISTRY-}geocodificador
+    container_name: webapigeolocalizador
+    build:
+      context: .
+      dockerfile: AndreaniCodificador/Dockerfile
+    depends_on:
+     - rabbitmq
+    ports:
+    - "1995:80"
+
+  rabbitmq: # login guest:guest
+    image: rabbitmq:3-management
+    hostname: "rabbitmq"
+    labels:
+      NAME: "rabbitmq"
+    ports:
+    - "4369:4369"
+    - "5671:5671"
+    - "5672:5672"
+    - "25672:25672"
+    - "15671:15671"
+    - "15672:15672"
+
+  database:  
+    image: microsoft/mssql-server-linux:2017-latest  
+    container_name: 'webapidb'  
+    environment:  
+      ACCEPT_EULA: Y  
+      SA_PASSWORD: "Soconcho3784"  
+    ports:  
+      - '1433:1433'  
+
