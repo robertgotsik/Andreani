@@ -48,7 +48,7 @@ namespace AndreaniCodificador.RabbitMQ.Bus
                 var message = Encoding.UTF8.GetString(body);
 
                 var deserializedEvent = JsonConvert.DeserializeObject<Geolocalizacion>(message);
-                //Ver por que no agarra los datos
+                //Llamo al servicio que realizara el Get a Open Street Map y lo publico.
                 var openStreetMapCoordinates = await _openSteetMapService.GetCoordinates(deserializedEvent);
                 Publish(openStreetMapCoordinates);
             };

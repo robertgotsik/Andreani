@@ -52,14 +52,12 @@ namespace Andreani.RabbitMQ.Bus
 
                 var deserializedEvent = JsonConvert.DeserializeObject<Geolocalizacion>(message);
 
-                //Updatear datos (inyectar context)
+                //Inyectar context y Updatear datos
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var dbContext = (AndreaniContext)scope.ServiceProvider.GetRequiredService<AndreaniContext>();
 
-                    //var record = deserializedEvent;
-
-                    var geo = new Geolocalizacion() { Id = deserializedEvent.Id };
+                                        var geo = new Geolocalizacion() { Id = deserializedEvent.Id };
                     geo.Latitud = deserializedEvent.Latitud;
                     geo.Longitud = deserializedEvent.Longitud;
                     geo.Estado = 1;
@@ -70,9 +68,5 @@ namespace Andreani.RabbitMQ.Bus
 
             channel.BasicConsume("coor-queue", true, consumer);
         }
-
-        //public void Initialize()
-        //{
-        //}
     }
 }

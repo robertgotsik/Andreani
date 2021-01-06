@@ -96,8 +96,6 @@ namespace Andreani.Controllers
             _bus.Publish(geolocalizacion);
 
             return Accepted(new GeolocalizacionDTO { Id = geolocalizacion.Id });
-            //return CreatedAtAction("GetGeolocalizacion", new GeolocalizacionDTO { Id = geolocalizacion.Id });
-            //return Accepted(geolocalizacion.Id);
         }
 
         // DELETE: api/Geolocalizacions/5
